@@ -1,10 +1,23 @@
 from flask import Flask, request, jsonify
 from researchGate import findResearchGate
 from googleAcademic import findGoogle
-from database import queryDatabase, insertData, insertTest, replaceTest
+from microsoft import findMicrosoft
+from database import queryDatabase, insertData
 from bson import json_util
 
 app = Flask(__name__)
+
+@app.route('/')
+def welcome():
+
+    return {
+        'message' : 'Bienvenido a la api de python webscraper de identidad digital',
+        'authors' : {
+            'Luis Octavio Grajales Servín' : 'Dev',
+            'Antonio Vázquez Gutiérrez' : 'Dev',
+            'M.S.I. José Alejandro Vargas Díaz' : 'Profesor a cargo'
+        }
+    }
 
 # Consulta la base de datos, de no tener datos se hace el scrape
 @app.route('/<string:name>')
@@ -16,12 +29,14 @@ def query_by_name(name):
     else:
         scrapeResults = {
             'research_gate' : findResearchGate(name),
-            'google' : findGoogle(name)
+            'google' : findGoogle(name),
+            'microsoft' : findMicrosoft(name)
         }
 
         insertedData = insertData(name, scrapeResults)
         
         return insertedData
+
 
 # Consulta únicamente la base de datos
 @app.route('/db/<string:name>')
@@ -39,36 +54,13 @@ def scrape(name):
 
     scrapeResults = {
         'research_gate' : findResearchGate(name),
-        'google' : findGoogle(name)
+        'google' : findGoogle(name),
+        'microsoft' : findMicrosoft(name)
     }
 
     insertedData = insertData(name, scrapeResults)
     
     return insertedData
-
-# Testing
-@app.route('/test/insert/<string:name>')
-def testinsertendpoint(name):
-
-    try:
-        return insertTest(name)
-        # return "Success"
-    except:
-        return "Fail"
-
-
-
-# Testing
-@app.route('/test/replace/<string:name>/<string:newname>')
-def testreplaceendpoint(name,newname):
-
-    try:
-        return replaceTest(name, newname)
-        # return "Success"
-    except:
-        return "Fail"
-
-
 
 
 if __name__ == "__main__":
