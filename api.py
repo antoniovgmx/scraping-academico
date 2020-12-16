@@ -12,7 +12,7 @@ def welcome():
 
     return {
         'message' : 'Bienvenido a la api de python webscraper de identidad digital',
-        'professor' : 'M.S.I. José Alejandro Vargas Díaz'
+        'professor' : 'M.S.I. José Alejandro Vargas Díaz',
         'authors' : {
             '2020' : 'Luis Octavio Grajales Servín',
             '2020' : 'Antonio Vázquez Gutiérrez'

@@ -16,12 +16,12 @@ def queryDatabase(search_param):
 def insertData(name, data):
 
     if(queryDatabase(name) is not None):
-        y se .replace_one({ 'full_name' : name }, {
+        replace_one({ 'full_name' : name }, {
         'full_name' : name,
         'date' : datetime.datetime.now(),
         'research_gate' : data['research_gate'],
         'google' : data['google'],
-        'microsoft': : data['microsoft']
+        'microsoft' : data['microsoft']
         }) 
     else:
         authors.insert_one({
@@ -29,7 +29,7 @@ def insertData(name, data):
         'date' : datetime.datetime.now(),
         'research_gate' : data['research_gate'],
         'google' : data['google'],
-        'microsoft': : data['microsoft']
+        'microsoft' : data['microsoft']
         })
 
     insertedData = queryDatabase(name)
